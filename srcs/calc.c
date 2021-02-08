@@ -1,5 +1,16 @@
 #include "bsq.h"
 
+int	get_min_of_3(int a, int b, int c)
+{
+	if (a <= b && a <= c)
+		return (a);
+	else if (b <= c && b <= a)
+		return (b);
+	else if (c <= b && c <= a)
+		return (c);
+	return (0);
+}
+
 int	**init_binary_map(char **map, int lines, char *map_char)
 {
 	int	line_size;
@@ -19,6 +30,9 @@ int	**init_binary_map(char **map, int lines, char *map_char)
 		while (j < line_size)
 		{
 			arr[i][j] = (map_char[0] == map[i][j]) ? 1 : 0;
+			if (i > 0 && j > 0 && map[i][j] != map_char[1])
+				arr[i][j] = get_min_of_3(
+				arr[i - 1][j], arr[i][j - 1], arr[i - 1][j - 1]) + 1;
 			j++;
 		}
 		i++;

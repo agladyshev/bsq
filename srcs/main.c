@@ -14,7 +14,6 @@ void	print_int_map(int **arr)
 	int i;
 	int j;
 
-	i = 0;
 	j = 0;
 	while (arr[j] != 0)
 	{
@@ -27,6 +26,57 @@ void	print_int_map(int **arr)
 		printf("\n");
 		j++;
 	}
+}
+
+int	*get_bsq(int **arr)
+{
+	int *bsq;
+	int i;
+	int j;
+
+	bsq = malloc(sizeof(int) * 3);
+	bsq[2] = 0;
+	j = 0;
+	while (arr[j] != 0)
+	{
+		i = 0;
+		while (arr[j][i] != -1)
+		{
+			if (arr[j][i] > bsq[2])
+			{
+				bsq[2] = arr[j][i];
+				bsq[0] = i;
+				bsq[1] = j;
+			}
+			i++;
+		}
+		j++;
+	}
+	return (bsq);
+}
+
+void	update_map(char ***map, int **arr, char *map_char)
+{
+	int *bsq;
+	int i;
+	int j;
+
+	bsq = get_bsq(arr);
+
+	printf("%d %d %d \n", bsq[0], bsq[1], bsq[2]);
+	j = 0;
+	while (arr[j] != 0)
+	{
+		i = 0;
+		while (arr[j][i] != -1)
+		{
+			if (i > bsq[0] - bsq[2] && j > bsq[1] - bsq[2] && i <= bsq[0] && j <= bsq[1])
+				(*map)[j][i] = map_char[2];
+			i++;
+		}
+		j++;
+	}
+	free(bsq);
 }
 
 int	solve_map(char *filename)
@@ -54,6 +104,8 @@ int	solve_map(char *filename)
 	print_map(map);
 	arr = init_binary_map(map, lines, map_char);
 	print_int_map(arr);
+	update_map(&map, arr, map_char);
+	print_map(map);
 	return (0);
 }
 
