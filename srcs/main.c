@@ -2,68 +2,30 @@
 
 # define BUF 4096
 
-int	get_num_from_str(char *str, int i)
-{
-	int j;
-	int nbr;
-
-	j = 0;
-	nbr = 0;
-	while (j < i)
-	{
-		if(str[j] >= '0' && str[j] <= '9')
-			nbr = nbr * 10 + (str[j] - 48);
-		j++;
-	}
-	return (nbr);
-}
-
-int	get_map_meta(char **map_char, int file)
-{
-	int	lines;
-	int	bytes;
-	int	i;
-	char	buf[1];
-	char	*str;
-
-	str = malloc(sizeof(char) * 100);
-	bytes = read(file, buf, 1);	
-	lines = 0;
-	i = 0;
-	while (bytes && *buf != 10)
-	{	
-		
-		str[i] = buf[0];
-		bytes = read(file, buf, 1);
-		i++;
-	}
-	if (i < 4)
-		return (0);
-	(*map_char)[2] = str[--i];
-	(*map_char)[1] = str[--i];
-	(*map_char)[0] = str[--i];
-	lines = get_num_from_str(str, i);
-	free(str);
-	return (lines);
-}
-/*
-int	map_to_str(char *filename)
-{
-	
-}	
-*/
 int	solve_map(char *filename)
 {
 	char	*map_char;
+	char	**map;
 	int	lines;
 	int 	file;
-
+	
 	map_char = malloc(sizeof(char) * 3);
 	file = open(filename, 0);
 	if (file < 0)
 		return (0);
 	lines = get_map_meta(&map_char, file);
+	if (lines == 0 || !map_char[0] || !map_char[1] || !map_char[2])
+	{
+		printf("fail\n");
+		return (0);
+	}
 	printf("Empty: %c | Obst: %c | Full: %c | Lines: %d\n", map_char[0], map_char[1], map_char[2], lines);
+	map = map_to_arr(file, lines);
+	while (*map)
+	{
+		printf("%s\n", *map);
+		map++;
+	}
 	return (0);
 }
 
