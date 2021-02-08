@@ -108,5 +108,7 @@ char	**map_to_arr(int file, int lines)
 		else
 			i++;
 	}
+	if (lines != i)
+		return (0);
 	return (map);
 }

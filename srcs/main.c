@@ -1,5 +1,14 @@
 #include "bsq.h"
 
+void	print_map(char **map)
+{
+	while (*map)
+	{
+		ft_putstr(*map);
+		map++;
+	}
+}
+
 int	solve_map(char *filename)
 {
 	char	*map_char;
@@ -19,10 +28,9 @@ int	solve_map(char *filename)
 	printf("Empty: %c | Obst: %c | Full: %c | Lines: %d\n",
 			map_char[0], map_char[1], map_char[2], lines);
 	map = map_to_arr(file, lines);
-	if (!map)
+	if (!map || !is_map_valid(map, map_char))
 		return (1);
-	is_map_valid(map, map_char);
-
+	print_map(map);
 	return (0);
 }
 
