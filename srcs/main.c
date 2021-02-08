@@ -9,12 +9,33 @@ void	print_map(char **map)
 	}
 }
 
+void	print_int_map(int **arr)
+{
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	while (arr[j] != 0)
+	{
+		i = 0;
+		while (arr[j][i] != -1)
+		{
+			printf("%d", arr[j][i]);
+			i++;
+		}
+		printf("\n");
+		j++;
+	}
+}
+
 int	solve_map(char *filename)
 {
 	char	*map_char;
 	char	**map;
 	int	lines;
 	int	file;
+	int	**arr;
 
 	map_char = malloc(sizeof(char) * 3);
 	file = open(filename, 0);
@@ -31,6 +52,8 @@ int	solve_map(char *filename)
 	if (!map || !is_map_valid(map, map_char))
 		return (1);
 	print_map(map);
+	arr = init_binary_map(map, lines, map_char);
+	print_int_map(arr);
 	return (0);
 }
 
