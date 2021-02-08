@@ -1,17 +1,15 @@
 #include "bsq.h"
 
-# define BUF 4096
-
 int	get_num_from_str(char *str, int i)
 {
-	int	j;
-	int	nbr;
+	int j;
+	int nbr;
 
 	j = 0;
 	nbr = 0;
 	while (j < i)
 	{
-		if(str[j] >= '0' && str[j] <= '9')
+		if (str[j] >= '0' && str[j] <= '9')
 			nbr = nbr * 10 + (str[j] - 48);
 		j++;
 	}
@@ -27,12 +25,11 @@ int	get_map_meta(char **map_char, int file)
 	char	*str;
 
 	str = malloc(sizeof(char) * BUF);
-	bytes = read(file, buf, 1);	
+	bytes = read(file, buf, 1);
 	lines = 0;
 	i = 0;
 	while (bytes && *buf != 10)
-	{	
-		
+	{
 		str[i] = buf[0];
 		bytes = read(file, buf, 1);
 		i++;
@@ -54,11 +51,11 @@ char	*get_line_one(int file)
 	int	bytes;
 	int	i;
 
-	bytes = read(file, buf, 1);	
+	bytes = read(file, buf, 1);
 	line = malloc(sizeof(char) * BUF);
 	i = 0;
 	while (bytes && *buf != 10)
-	{	
+	{
 		line[i] = buf[0];
 		bytes = read(file, buf, 1);
 		i++;
@@ -76,7 +73,6 @@ char	**init_arr(int file, int lines)
 
 	first = get_line_one(file);
 	line_len = ft_strlen(first);
-	printf("%d len \n", line_len);
 	map = malloc(sizeof(char *) * lines + 1);
 	map[0] = malloc(sizeof(char) * line_len + 1);
 	i = 0;
@@ -86,16 +82,15 @@ char	**init_arr(int file, int lines)
 		i++;
 	}
 	free(first);
-	printf("First line of arr is: %s\n", map[0]);
 	return (map);
 }
 
 char	**map_to_arr(int file, int lines)
 {
-	char	**map;
 	int	line_len;
 	int	i;
 	int	bytes;
+	char	**map;
 
 	map = init_arr(file, lines);
 	line_len = ft_strlen(map[0]);
@@ -113,6 +108,5 @@ char	**map_to_arr(int file, int lines)
 		else
 			i++;
 	}
-	printf("Lines read: %d\n", i);
 	return (map);
 }

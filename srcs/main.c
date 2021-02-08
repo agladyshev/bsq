@@ -1,31 +1,28 @@
 #include "bsq.h"
 
-# define BUF 4096
-
 int	solve_map(char *filename)
 {
 	char	*map_char;
 	char	**map;
 	int	lines;
-	int 	file;
-	
+	int	file;
+
 	map_char = malloc(sizeof(char) * 3);
 	file = open(filename, 0);
 	if (file < 0)
-		return (0);
+		return (1);
 	lines = get_map_meta(&map_char, file);
 	if (lines == 0 || !map_char[0] || !map_char[1] || !map_char[2])
 	{
-		printf("fail\n");
-		return (0);
+		return (1);
 	}
-	printf("Empty: %c | Obst: %c | Full: %c | Lines: %d\n", map_char[0], map_char[1], map_char[2], lines);
+	printf("Empty: %c | Obst: %c | Full: %c | Lines: %d\n",
+			map_char[0], map_char[1], map_char[2], lines);
 	map = map_to_arr(file, lines);
-	while (*map)
-	{
-		printf("%s\n", *map);
-		map++;
-	}
+	if (!map)
+		return (1);
+	is_map_valid(map, map_char);
+
 	return (0);
 }
 
@@ -49,5 +46,5 @@ int	main(int argc, char **argv)
 			}
 			argv++;
 		}
-	return(is_error);
+	return (is_error);
 }
