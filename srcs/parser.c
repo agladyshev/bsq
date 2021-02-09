@@ -6,7 +6,7 @@
 /*   By: stiffiny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:50:46 by stiffiny          #+#    #+#             */
-/*   Updated: 2021/02/09 11:52:46 by stiffiny         ###   ########.fr       */
+/*   Updated: 2021/02/09 12:09:49 by stiffiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int		get_num_from_str(char *str, int i)
 	{
 		if (str[j] >= '0' && str[j] <= '9')
 			nbr = nbr * 10 + (str[j] - 48);
+		else
+			return (0);
 		j++;
 	}
 	return (nbr);
