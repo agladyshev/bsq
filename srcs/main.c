@@ -63,7 +63,7 @@ void	update_map(char ***map, int **arr, char *map_char)
 
 	bsq = get_bsq(arr);
 
-	printf("%d %d %d \n", bsq[0], bsq[1], bsq[2]);
+	//printf("%d %d %d \n", bsq[0], bsq[1], bsq[2]);
 	j = 0;
 	while (arr[j] != 0)
 	{
@@ -79,6 +79,34 @@ void	update_map(char ***map, int **arr, char *map_char)
 	free(bsq);
 }
 
+void	free_arr_char(char **arr)
+{
+	int i;
+
+	i = 0;
+	while (arr[i] != 0)
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr[i]);
+	free(arr);
+}
+
+void	free_arr_int(int **arr)
+{
+	int i;
+
+	i = 0;
+	while (arr[i] != 0)
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr[i]);
+	free(arr);
+}
+
 int	solve_map(char *filename)
 {
 	char	*map_char;
@@ -88,24 +116,34 @@ int	solve_map(char *filename)
 	int	**arr;
 
 	map_char = malloc(sizeof(char) * 3);
-	file = open(filename, 0);
+	file = (filename != 0) ? open(filename, 0) : 0;
 	if (file < 0)
 		return (1);
+	printf("here\n");
 	lines = get_map_meta(&map_char, file);
+	printf("after\n");
 	if (lines == 0 || !map_char[0] || !map_char[1] || !map_char[2])
 	{
+		printf("error\n");
 		return (1);
 	}
 	printf("Empty: %c | Obst: %c | Full: %c | Lines: %d\n",
 			map_char[0], map_char[1], map_char[2], lines);
 	map = map_to_arr(file, lines);
+	if (!map)
+		printf("no map\n");
+	if (!is_map_valid(map, map_char))
+		printf("invalid\n");
 	if (!map || !is_map_valid(map, map_char))
 		return (1);
-	print_map(map);
+	//print_map(map);
 	arr = init_binary_map(map, lines, map_char);
-	print_int_map(arr);
+	//print_int_map(arr);
 	update_map(&map, arr, map_char);
 	print_map(map);
+	free_arr_char(map);
+	free_arr_int(arr);
+	free(map_char);
 	return (0);
 }
 
@@ -117,7 +155,14 @@ int	main(int argc, char **argv)
 	argc--;
 	argv++;
 	if (!argc)
+	{
 		is_error = solve_map(0);
+		if (is_error)
+		{
+			write(1, "Map error\n", 10);
+			return (1);
+		}
+	}
 	else
 		while (*argv)
 		{
