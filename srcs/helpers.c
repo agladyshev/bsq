@@ -24,11 +24,7 @@ int		ft_strlen(char *str)
 
 void	ft_putstr(char *str)
 {
-	while (*str)
-	{
-		write(1, str, 1);
-		str++;
-	}
+	write(1, str, ft_strlen(str));
 	write(1, "\n", 1);
 }
 

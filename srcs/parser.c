@@ -6,7 +6,7 @@
 /*   By: stiffiny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:50:46 by stiffiny          #+#    #+#             */
-/*   Updated: 2021/02/09 12:09:49 by stiffiny         ###   ########.fr       */
+/*   Updated: 2021/02/09 14:09:00 by stiffiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,16 @@ char	*get_line_one(int file)
 	char	*line;
 	int		bytes;
 	int		i;
+	int		n;
 
+	n = 1;
 	bytes = read(file, buf, 1);
 	line = malloc(sizeof(char) * BUF);
 	i = 0;
 	while (bytes && *buf != 10)
 	{
+		if ((i + 1) % BUF == 0)
+			line = get_copy_plus_buf(&line, ++n);
 		line[i] = buf[0];
 		bytes = read(file, buf, 1);
 		i++;
