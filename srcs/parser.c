@@ -120,12 +120,12 @@ char	**map_to_arr(int file, int lines)
 			bytes = read(file, map[i] + bytes, line_len + 1 - bytes);
 		map[i][line_len] = '\0';
 		if (!bytes)
+			free(map[i]);
+		if (!bytes)
 			map[i] = 0;
 		i++;
 	}
 	if (lines != i - 1)
 		return (0);
-	if (file > 2)
-		close(file);
 	return (map);
 }

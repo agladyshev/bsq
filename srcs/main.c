@@ -35,6 +35,15 @@ void	update_map(char ***map, int **arr, char *map_char)
 	free(bsq);
 }
 
+void	free_mem(char *map_char, char **map, int **arr, int file)
+{
+	free_arr_char(map);
+	free_arr_int(arr);
+	free(map_char);
+	if (file > 2)
+		close(file);
+}
+
 int		solve_map(char *filename)
 {
 	char	*map_char;
@@ -43,22 +52,26 @@ int		solve_map(char *filename)
 	int		file;
 	int		**arr;
 
-	map_char = malloc(sizeof(char) * 3);
 	file = (filename != 0) ? open(filename, 0) : 0;
 	if (file < 0)
 		return (1);
+	map_char = malloc(sizeof(char) * 3);
 	lines = get_map_meta(&map_char, file);
 	if (lines == 0 || !map_char[0] || !map_char[1] || !map_char[2])
+	{
+		free_mem(map_char, 0, 0, file);
 		return (1);
+	}
 	map = map_to_arr(file, lines);
 	if (!map || !is_map_valid(map, map_char))
+	{
+		free_mem(map_char, map, 0, file);
 		return (1);
+	}
 	arr = init_binary_map(map, lines, map_char);
 	update_map(&map, arr, map_char);
 	print_map(map);
-	free_arr_char(map);
-	free_arr_int(arr);
-	free(map_char);
+	free_mem(map_char, map, arr, file);
 	return (0);
 }
 

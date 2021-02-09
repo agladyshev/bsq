@@ -46,13 +46,16 @@ void	free_arr_char(char **arr)
 	int i;
 
 	i = 0;
-	while (arr[i] != 0)
+	if (arr)
 	{
+		while (arr[i] != 0)
+		{
+			free(arr[i]);
+			i++;
+		}
 		free(arr[i]);
-		i++;
+		free(arr);
 	}
-	free(arr[i]);
-	free(arr);
 }
 
 void	free_arr_int(int **arr)
@@ -60,11 +63,14 @@ void	free_arr_int(int **arr)
 	int i;
 
 	i = 0;
-	while (arr[i] != 0)
+	if (arr)
 	{
+		while (arr[i] != 0)
+		{
+			free(arr[i]);
+			i++;
+		}
 		free(arr[i]);
-		i++;
+		free(arr);
 	}
-	free(arr[i]);
-	free(arr);
 }
