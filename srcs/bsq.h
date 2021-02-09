@@ -12,7 +12,7 @@
 
 #ifndef BSQ_H
 # define BSQ_H
-# define BUF 1024
+# define BUF 4096
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
@@ -28,5 +28,5 @@ void	free_arr_char(char **arr);
 void	free_arr_int(int **arr);
 int		*get_bsq(int **arr);
 char	*get_copy_plus_buf(char **str, int n);
-
+int		get_num_from_str(char *str, int i);
 #endif

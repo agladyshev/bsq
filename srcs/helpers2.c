@@ -31,3 +31,21 @@ char	*get_copy_plus_buf(char **str, int n)
 	free(*str);
 	return (copy);
 }
+
+int		get_num_from_str(char *str, int i)
+{
+	int j;
+	int nbr;
+
+	j = 0;
+	nbr = 0;
+	while (j < i)
+	{
+		if (str[j] >= '0' && str[j] <= '9')
+			nbr = nbr * 10 + (str[j] - 48);
+		else
+			return (0);
+		j++;
+	}
+	return (nbr);
+}

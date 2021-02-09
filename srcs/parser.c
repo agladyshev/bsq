@@ -12,24 +12,6 @@
 
 #include "bsq.h"
 
-int		get_num_from_str(char *str, int i)
-{
-	int j;
-	int nbr;
-
-	j = 0;
-	nbr = 0;
-	while (j < i)
-	{
-		if (str[j] >= '0' && str[j] <= '9')
-			nbr = nbr * 10 + (str[j] - 48);
-		else
-			return (0);
-		j++;
-	}
-	return (nbr);
-}
-
 int		get_map_meta(char **map_char, int file)
 {
 	int		lines;
@@ -105,31 +87,45 @@ char	**init_arr(int file, int lines)
 	return (map);
 }
 
+char	*read_line(int file, int line_len)
+{
+	char	*line;
+	int		bytes;
+	int		total;
+
+	total = 0;
+	line = malloc(sizeof(char) * (line_len + 1));
+	while (total < line_len + 1)
+	{
+		bytes = read(file, line + total, line_len + 1 - total);
+		total += bytes;
+		if (!bytes)
+		{
+			free(line);
+			line = 0;
+			return (line);
+		}
+	}
+	if (line != 0)
+		line[line_len] = '\0';
+	return (line);
+}
+
 char	**map_to_arr(int file, int lines)
 {
 	int		line_len;
 	int		i;
-	int		bytes;
 	char	**map;
 
 	map = init_arr(file, lines);
 	line_len = ft_strlen(map[0]);
-	bytes = -1;
-	i = 1;
-	while (bytes)
+	i = 0;
+	while (map[i])
 	{
-		map[i] = malloc(sizeof(char) * (line_len + 1));
-		bytes = read(file, map[i], line_len + 1);
-		if (bytes < line_len + 1 && bytes > 0)
-			bytes = read(file, map[i] + bytes, line_len + 1 - bytes);
-		map[i][line_len] = '\0';
-		if (!bytes)
-			free(map[i]);
-		if (!bytes)
-			map[i] = 0;
 		i++;
+		map[i] = read_line(file, line_len);
 	}
-	if (lines != i - 1)
+	if (lines != i)
 		return (0);
 	return (map);
 }
