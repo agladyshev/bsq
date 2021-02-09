@@ -4,6 +4,8 @@ SRCS		= ${wildcard srcs/*.c}
 
 OBJS		= ${SRCS:.c=.o}
 
+HEADER		= srcs/bsq.h
+
 NAME		= bsq 
 
 CC			= gcc
@@ -14,7 +16,7 @@ CFLAGS 		= -Wall -Wextra -Werror
 
 .SILENT:
 
-${NAME}:	${OBJS}
+${NAME}:	${OBJS} ${HEADER}
 			${CC} ${CFLAGS} ${OBJS} -o ${NAME}
 
 all:		${NAME}
