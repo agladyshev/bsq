@@ -33,7 +33,6 @@ int	get_map_meta(char **map_char, int file)
 		str[i] = buf[0];
 		bytes = read(file, buf, 1);
 		i++;
-		printf("malloc failure\n");
 	}
 	if (i < 4)
 		return (0);
@@ -73,7 +72,6 @@ char	**init_arr(int file, int lines)
 	int	i;
 
 	first = get_line_one(file);
-
 	line_len = ft_strlen(first);
 	map = malloc(sizeof(char *) * lines + 1);
 	if (!map)
@@ -105,7 +103,7 @@ char	**map_to_arr(int file, int lines)
 		map[i] = malloc(sizeof(char) * (line_len + 1));
 		bytes = read(file, map[i], line_len + 1);
 		if (bytes < line_len + 1 && bytes > 0)
-			bytes = read(file, map[i] + bytes, line_len + 1 - bytes);			
+			bytes = read(file, map[i] + bytes, line_len + 1 - bytes);
 		map[i][line_len] = '\0';
 		if (!bytes)
 			map[i] = 0;
@@ -114,6 +112,6 @@ char	**map_to_arr(int file, int lines)
 	if (lines != i - 1)
 		return (0);
 	if (file > 2)
-		close(file);	
+		close(file);
 	return (map);
 }

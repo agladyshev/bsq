@@ -13,17 +13,11 @@ int	is_map_valid(char **map, char *map_char)
 		{
 			if ((*map)[i] != map_char[0] &&
 				(*map)[i] != map_char[1])
-			{
-				printf("Char error\n");
 				return (0);
-			}
 			i++;
 		}
 		if (i != len)
-		{
-			printf("Len error\n");
 			return (0);
-		}
 		map++;
 	}
 	return (1);

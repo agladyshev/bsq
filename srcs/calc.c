@@ -39,3 +39,30 @@ int	**init_binary_map(char **map, int lines, char *map_char)
 	}
 	return (arr);
 }
+
+int	*get_bsq(int **arr)
+{
+	int *bsq;
+	int i;
+	int j;
+
+	bsq = malloc(sizeof(int) * 3);
+	bsq[2] = 0;
+	j = 0;
+	while (arr[j] != 0)
+	{
+		i = 0;
+		while (arr[j][i] != -1)
+		{
+			if (arr[j][i] > bsq[2])
+			{
+				bsq[2] = arr[j][i];
+				bsq[0] = i;
+				bsq[1] = j;
+			}
+			i++;
+		}
+		j++;
+	}
+	return (bsq);
+}
