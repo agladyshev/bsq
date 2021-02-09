@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: stiffiny <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/09 11:49:52 by stiffiny          #+#    #+#             */
+/*   Updated: 2021/02/09 11:49:55 by stiffiny         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "bsq.h"
 
 void	update_map(char ***map, int **arr, char *map_char)
@@ -23,13 +35,13 @@ void	update_map(char ***map, int **arr, char *map_char)
 	free(bsq);
 }
 
-int	solve_map(char *filename)
+int		solve_map(char *filename)
 {
 	char	*map_char;
 	char	**map;
-	int	lines;
-	int	file;
-	int	**arr;
+	int		lines;
+	int		file;
+	int		**arr;
 
 	map_char = malloc(sizeof(char) * 3);
 	file = (filename != 0) ? open(filename, 0) : 0;
@@ -50,7 +62,7 @@ int	solve_map(char *filename)
 	return (0);
 }
 
-int	main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	int	is_error;
 	int	i;

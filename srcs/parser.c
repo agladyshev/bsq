@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: stiffiny <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/09 11:50:46 by stiffiny          #+#    #+#             */
+/*   Updated: 2021/02/09 11:52:46 by stiffiny         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "bsq.h"
 
-int	get_num_from_str(char *str, int i)
+int		get_num_from_str(char *str, int i)
 {
 	int j;
 	int nbr;
@@ -16,11 +28,11 @@ int	get_num_from_str(char *str, int i)
 	return (nbr);
 }
 
-int	get_map_meta(char **map_char, int file)
+int		get_map_meta(char **map_char, int file)
 {
-	int	lines;
-	int	bytes;
-	int	i;
+	int		lines;
+	int		bytes;
+	int		i;
 	char	buf[1];
 	char	*str;
 
@@ -48,8 +60,8 @@ char	*get_line_one(int file)
 {
 	char	buf[1];
 	char	*line;
-	int	bytes;
-	int	i;
+	int		bytes;
+	int		i;
 
 	bytes = read(file, buf, 1);
 	line = malloc(sizeof(char) * BUF);
@@ -68,8 +80,8 @@ char	**init_arr(int file, int lines)
 {
 	char	**map;
 	char	*first;
-	int	line_len;
-	int	i;
+	int		line_len;
+	int		i;
 
 	first = get_line_one(file);
 	line_len = ft_strlen(first);
@@ -89,9 +101,9 @@ char	**init_arr(int file, int lines)
 
 char	**map_to_arr(int file, int lines)
 {
-	int	line_len;
-	int	i;
-	int	bytes;
+	int		line_len;
+	int		i;
+	int		bytes;
 	char	**map;
 
 	map = init_arr(file, lines);
