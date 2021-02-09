@@ -74,9 +74,6 @@ char	**init_arr(int file, int lines)
 	first = get_line_one(file);
 
 	line_len = ft_strlen(first);
-	printf("First: %s\n", first);
-
-	printf("First: %d\n", line_len);
 	map = malloc(sizeof(char *) * lines + 1);
 	if (!map)
 		printf("malloc failure\n");
@@ -87,7 +84,6 @@ char	**init_arr(int file, int lines)
 		map[0][i] = first[i];
 		i++;
 	}
-	printf("%s\n", map[0]);
 	free(first);
 	return (map);
 }
@@ -101,25 +97,29 @@ char	**map_to_arr(int file, int lines)
 
 	map = init_arr(file, lines);
 	line_len = ft_strlen(map[0]);
-	printf("here1234\n");
 	bytes = -1;
 	i = 1;
 	while (bytes)
 	{
 		map[i] = malloc(sizeof(char) * (line_len + 1));
-		printf("malloc\n");
 		bytes = read(file, map[i], line_len + 1);
-		printf("%s\n", map[i]);
+		//printf("%s\n", map[i]);
+		//write(1, map[i], line_len + 1);
 		if (bytes < line_len + 1 && bytes > 0)
+		{
+			printf("line is %d\n", i);
+			printf("Bytes error\n");
+			printf("Bytes: %d\n", bytes);
 			return (0);
+		}
 		map[i][line_len] = '\0';
-		printf("zero\n");
 		if (!bytes)
 			map[i] = 0;
 		i++;
-		printf("end\n");
 	}
 	if (lines != i - 1)
 		return (0);
+	if (file > 2)
+		close(file);	
 	return (map);
 }
