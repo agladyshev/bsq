@@ -6,7 +6,7 @@
 /*   By: stiffiny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:49:52 by stiffiny          #+#    #+#             */
-/*   Updated: 2021/02/09 11:49:55 by stiffiny         ###   ########.fr       */
+/*   Updated: 2021/02/10 15:40:35 by stiffiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ int		solve_map(char *filename)
 		return (1);
 	map_char = malloc(sizeof(char) * 3);
 	lines = get_map_meta(&map_char, file);
-	if (lines == 0 || !map_char[0] || !map_char[1] || !map_char[2])
+	if (lines == 0 || !map_char[0] || !map_char[1] || !map_char[2] ||
+			map_char[0] == map_char[1])
 		return (free_mem(map_char, 0, 0, file) || 1);
 	map = map_to_arr(file, lines);
 	if (!map || !is_map_valid(map, map_char))
@@ -72,28 +73,27 @@ int		solve_map(char *filename)
 int		main(int argc, char **argv)
 {
 	int	is_error;
+	int current;
 	int	i;
 
-	i = 0;
+	i = 1;
 	is_error = 0;
-	argc--;
-	argv++;
-	if (!argc)
+	if (argc == 1)
+	{
 		is_error = solve_map(0);
+		if (is_error)
+			write(2, "Map error\n", 10);
+	}
 	else
 		while (i < argc)
 		{
-			if (i > 0)
+			if (i > 1)
 				write(1, "\n", 1);
-			is_error = solve_map(argv[i]);
-			if (is_error)
-			{
-				write(1, "Map error\n", 10);
-				return (1);
-			}
+			current = solve_map(argv[i]);
+			if (current)
+				write(2, "Map error\n", 10);
+			is_error = (is_error) ? is_error : current;
 			i++;
 		}
-	if (is_error)
-		write(1, "Map error\n", 10);
 	return (is_error);
 }

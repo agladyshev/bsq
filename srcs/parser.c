@@ -6,7 +6,7 @@
 /*   By: stiffiny <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/09 11:50:46 by stiffiny          #+#    #+#             */
-/*   Updated: 2021/02/09 14:09:00 by stiffiny         ###   ########.fr       */
+/*   Updated: 2021/02/10 15:38:29 by stiffiny         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ int		get_map_meta(char **map_char, int file)
 	i = 0;
 	while (bytes && *buf != 10)
 	{
-		str[i] = buf[0];
+		if (bytes && buf[0] < 32)
+			return (0);
+		str[i++] = buf[0];
 		bytes = read(file, buf, 1);
-		i++;
 	}
 	if (i < 4)
 		return (0);
